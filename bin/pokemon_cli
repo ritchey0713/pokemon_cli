@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby 
+
+require "bundler/setup"
+require "pokemon_cli"
+
+# api = Api.new("https://pokeapi.co/api/v2/")
+
+# api.search_pokemon_by_name("ditto")
+
+cli = Cli.new
+cli.run 
