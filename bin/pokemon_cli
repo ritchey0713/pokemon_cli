@@ -7,5 +7,7 @@ require "pokemon_cli"
 
 # api.search_pokemon_by_name("ditto")
 
-cli = Cli.new
+
+# cli = NewCLI.new
+cli = CLI.new
 cli.run 

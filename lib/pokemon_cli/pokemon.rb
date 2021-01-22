@@ -1,12 +1,11 @@
+## display pokedex 
+## display caught 
+
 class Pokemon 
-  # pokemon attrs for MY class 
-  # name, => gives a string
-  # species => gives url ?
-  # moves => another big hash
-  # abilities => another hash
-  # types => hashes 
-  # id
-  attr_accessor :moves, :abilities, :nickname 
+
+  include CatchPokes::InstanceMethods
+
+  attr_accessor :moves, :abilities, :nickname, :add_to_bag
   attr_reader :type, :id, :species
 
   @@all = []
@@ -21,7 +20,17 @@ class Pokemon
       # hash[k] = v
 
     end 
+    create_moves(self.moves)
     @@all << self
+  end 
+  
+  def create_moves(moves_arr)
+    puts "please wait while we find your pokemon..."
+    api = Api.new
+    move_objs = moves_arr.map do |move_name|
+     api.search_moves_by_name(move_name)
+    end
+    self.moves = move_objs
   end 
 
   def save 
@@ -30,6 +39,18 @@ class Pokemon
 
   def self.all 
    @@all
+  end
+
+
+
+  def catch_pokemon 
+    if probs 
+      self.add_to_bag
+      puts "you caught the #{self.species}"
+    else 
+      puts "they got away!"
+    end 
+
   end
 
   private 
@@ -41,7 +62,7 @@ class Pokemon
   def type=(type)
     @type = type
   end 
-  
+
   def species=(species)
     @species = species
   end 
